@@ -43,7 +43,7 @@ rule signals:
 
 rule umap:
    input:
-      c=config.signals_input_template,
+      c=config.signals_output_template,
       h=config.hmmcopy_reads_template
    output:
       st=config.signals_umap_template,
