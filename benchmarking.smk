@@ -42,7 +42,8 @@ rule copynumber_benchmark:
         po=config.ploidy_results,
         ho=config.hamming_results
     resources:
-        mem="8G",
+        mem="16G",
+        runtime="12h"
     shell:
         "python scripts/benchmarking/copynumber.py "
         "-ha {input.ha} "
