@@ -41,7 +41,6 @@ def load_chisel_clones(path):
 
 def load_signals_results(path):
     signals = pd.read_csv(path, sep="\t")
-    print(signals.head())
     return signals
 
 
@@ -57,7 +56,7 @@ def load_hmmcopy_results(path):
 
 
 def load_hmmcopy_clones(path):
-    hmmcopy = pd.read_csv(hmmcopy_file, sep="\t")
+    hmmcopy = pd.read_csv(path, sep="\t")
     hmmcopy = hmmcopy[hmmcopy["clone_id"] != "0"]
     return hmmcopy
 

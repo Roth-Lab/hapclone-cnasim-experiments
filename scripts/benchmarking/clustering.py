@@ -84,7 +84,7 @@ def main(args):
 
         # HmmCopy
         if Path(hmmcopy_file).exists():
-            hmmcopy = load_hmmcopy_clonse(hmmcopy_file)
+            hmmcopy = load_hmmcopy_clones(hmmcopy_file)
             hmmcopy_results = benchmark_cluster(
                 hmmcopy, distance_matrix, "clone_id", "cell_id"
             )

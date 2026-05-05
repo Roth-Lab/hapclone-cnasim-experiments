@@ -21,6 +21,7 @@ rule cnasim:
     output:
         config.cnasim_reads,
         config.cnasim_profiles,
+        config.cnasim_tree
     conda:
         "envs/cnasim.yaml"
     resources:

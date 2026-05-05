@@ -49,8 +49,8 @@ rule umap:
       st=config.signals_umap_template,
       ht=config.hmmcopy_umap_template
    conda:
-      "signals"
+      "envs/signals.yaml"
    resources:
       mem="16G"
    shell:
-      "Rscript formatting/umap.R {input.c} {input.h} {output.st} {output.ht}"
+      "Rscript scripts/signals/umap.R {input.c} {input.h} {output.st} {output.ht}"
