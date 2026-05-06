@@ -17,7 +17,7 @@ def main(args):
     cnasim = pd.read_csv(cnasim_profile_file, sep="\t")
     cnasim["total"] = cnasim["Acount"].astype(int) + cnasim["Bcount"].astype(int)
     cnasim["baf"] = cnasim["Acount"].astype(int) / cnasim["total"]
-    cnasim["CELL"] = [int(x[4:]) - 1 for x in cnasim.CELL.values]
+    #cnasim["CELL"] = [int(x[4:]) - 1 for x in cnasim.CELL.values]
 
     ticks, tick_labels = get_ticks(cnasim)
 
@@ -29,7 +29,7 @@ def main(args):
     num_cells = a.shape[0]
     hapclone = pd.DataFrame(data=a.flatten(), columns=["acounts"])
     cells = np.repeat(np.arange(num_cells), num_bins)
-    hapclone["cells"] = cells
+    hapclone["cells"] = cells + 1
     hapclone["bcounts"] = hapclone_baf[:, :, :, 1].sum(axis=2).flatten()
     hapclone["total"] = hapclone["acounts"] + hapclone["bcounts"]
     hapclone["baf"] = hapclone["acounts"] / hapclone["total"]
@@ -37,6 +37,7 @@ def main(args):
     # Cnasim reads
     cnasim_profile = ordered_profiles("CELL", "total", cnasim, leaves)
     cnasim_baf = ordered_profiles("CELL", "baf", cnasim, leaves)
+    leaves = [int(x[4:]) for x in leaves]
     hapclone_profile = ordered_profiles("cells", "total", hapclone, leaves)
     hapclone_baf = ordered_profiles("cells", "baf", hapclone, leaves)
     names = [
@@ -48,7 +49,7 @@ def main(args):
     profiles = [cnasim_profile, cnasim_baf, hapclone_profile, hapclone_baf]
     cmap = ["OrRd", "GnBu", "OrRd", "GnBu"]
 
-    fig = plot_profiles(profiles, names, ticks, tick_labels, cmap, None, None, 2)
+    fig = plot_profiles(profiles, names, ticks, tick_labels, cmap, 0, None, 2)
     fig.savefig(args.out_file)
 
 
