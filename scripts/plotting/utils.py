@@ -12,9 +12,19 @@ def ordered_profiles(cell_col, total_col, data, order):
     profiles = np.vstack(profiles)
     return profiles
 
+def order_hapclone(data, order):
+    profiles = []
+    for j in range(len(order)):
+        cell = order[j]
+        print(cell)
+        profiles.append(data[j])
+    profiles = np.vstack(profiles)
+    return profiles
+
 
 def load_cnasim_profile(path):
     profile = pd.read_csv(path, sep="\t")
+    profile = profile.sort_values(by=["CELL", "chrom", "start"])
     profile[["A", "B"]] = profile["CN states"].str.split(r",", expand=True)
     profile["total"] = profile["A"].astype(int) + profile["B"].astype(int)
     profile["baf"] = profile["A"].astype(int) / profile["total"]
