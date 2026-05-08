@@ -62,6 +62,7 @@ def load_chisel_results(path, baf=False):
     chisel = pd.read_csv(
         path, sep="\t", usecols=["#CHR", "START", "END", "CELL", "HAP_CN"]
     )
+    chisel['CELL'] = 'cell' + chisel['CELL'].astype(str)
     chisel[["A", "B"]] = chisel["HAP_CN"].str.split(r"|", expand=True)
     chisel["total"] = chisel["A"].astype(int) + chisel["B"].astype(int)
     if baf == True:

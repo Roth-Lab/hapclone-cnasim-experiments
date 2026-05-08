@@ -17,6 +17,7 @@ def load_cnasim_tree(path):
 
 def load_cnasim_profile(path):
     profile = pd.read_csv(path, sep="\t")
+    profile = profile.sort_values(by=["CELL", "chrom", "start"])
     profile[["A", "B"]] = profile["CN states"].str.split(r",", expand=True)
     profile["total"] = profile["A"].astype(int) + profile["B"].astype(int)
 
