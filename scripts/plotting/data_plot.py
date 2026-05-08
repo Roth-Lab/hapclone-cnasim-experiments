@@ -22,8 +22,8 @@ def main(args):
 
     with h5py.File(hapclone_file, "r") as fh:
         hapclone_baf = fh["baf"][()]
-        bins = fh["bins"][()].astype(str)
-        cells = fh["cells"][()].astype(str)
+        bins = [x.decode() for x in fh["bins"][()]]
+        cells = [x.decode() for x in fh["cells"][()]]
 
     a = hapclone_baf[:, :, :, 0].sum(axis=2)
     b = hapclone_baf[:, :, :, 1].sum(axis=2)
@@ -36,12 +36,8 @@ def main(args):
     hapclone["bcounts"] = hapclone_baf[:, :, :, 1].sum(axis=2).flatten()
     hapclone["total"] = hapclone["acounts"] + hapclone["bcounts"]
     hapclone["baf"] = hapclone["acounts"] / hapclone["total"]
-    bins = [x.split(':') for x in bins]
     hapclone['bins'] = bins*50
-    hapclone[['chrom', 'beg', 'end']] = hapclone['bins'].astype('str').str.split(', ', expand=True)
-    hapclone['chrom'] = [int(x[5:-1]) for x in hapclone.chrom.values]
-    hapclone['beg'] = [int(x[1:-1]) for x in hapclone.beg.values]
-    hapclone['end'] = [int(x[1:-2]) for x in hapclone.end.values]
+    hapclone[['chrom', 'beg', 'end']] = hapclone['bins'].astype('str').str.split(':', expand=True)
     hapclone = hapclone.sort_values(['cells', 'chrom', 'beg'])
 
 
