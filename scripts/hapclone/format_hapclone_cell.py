@@ -29,6 +29,8 @@ def get_baf(bin_size, block_size, snps_file):
 
     df = pd.read_csv(snps_file, sep="\t")
 
+    df['chrom'] = [int(x[3:]) for x in df.chrom.values]
+
     out_df = []
 
     bin_idx = 0
@@ -36,7 +38,7 @@ def get_baf(bin_size, block_size, snps_file):
     bins = []
 
     for (chrom, start, end), bin_df in df.groupby(["chrom", "start", "end"]):
-        bins.append({"chrom": chrom, "start": start, "end": end, "bin_idx": bin_idx})
+        bins.append({"chrom": 'chr' + str(chrom), "start": start, "end": end, "bin_idx": bin_idx})
 
         for i in range(num_blocks):
             block_start = start + i * block_size
@@ -46,7 +48,7 @@ def get_baf(bin_size, block_size, snps_file):
             block_df = bin_df[bin_df["pos"].between(block_start, block_end)]
 
             row = {
-                "chrom": chrom,
+                "chrom": 'chr' + str(chrom),
                 "start": start,
                 "end": end,
                 "bin_idx": bin_idx,

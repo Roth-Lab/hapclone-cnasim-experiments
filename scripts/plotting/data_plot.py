@@ -38,7 +38,6 @@ def main(args):
     hapclone["baf"] = hapclone["acounts"] / hapclone["total"]
     hapclone['bins'] = bins*50
     hapclone[['chrom', 'beg', 'end']] = hapclone['bins'].astype('str').str.split(':', expand=True)
-    hapclone = hapclone.sort_values(['cells', 'chrom', 'beg'])
 
 
     # Cnasim reads
