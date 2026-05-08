@@ -28,7 +28,6 @@ def load_cnasim_profile(path):
     profile[["A", "B"]] = profile["CN states"].str.split(r",", expand=True)
     profile["total"] = profile["A"].astype(int) + profile["B"].astype(int)
     profile["baf"] = profile["A"].astype(int) / profile["total"]
-    profile = profile.sort_values(by=["CELL", "chrom", "start"])
 
     return profile
 
