@@ -24,10 +24,11 @@ def order_hapclone(data, order):
 
 def load_cnasim_profile(path):
     profile = pd.read_csv(path, sep="\t")
-    profile = profile.sort_values(by=["CELL", "chrom", "start"])
+    profile['chrom'] = [int(x[3:]) for x in profile.chrom.values]
     profile[["A", "B"]] = profile["CN states"].str.split(r",", expand=True)
     profile["total"] = profile["A"].astype(int) + profile["B"].astype(int)
     profile["baf"] = profile["A"].astype(int) / profile["total"]
+    profile = profile.sort_values(by=["CELL", "chrom", "start"])
 
     return profile
 
@@ -51,6 +52,8 @@ def load_hapclone_results(path, baf=False, adj=False, baf_adj=False):
         hapclone['cn_cell_adj'] = hapclone['cn_A_cell_adj'] + hapclone['cn_B_cell_adj']
     if baf_adj == True:
         hapclone['baf_adjusted'] = hapclone['cn_A_cell_adj'] / (hapclone['cn_cell_adj'])
+    hapclone['chrom'] = [int(x[3:]) for x in hapclone.chrom.values]
+    hapclone = hapclone.sort_values(by=["cell_id", "chrom", "beg"])
 
     return hapclone
 
@@ -86,7 +89,7 @@ def get_ticks(cnasim):
     cell["bin"] = cell.index
     bins = cell.drop_duplicates(subset="chrom")
     ticks = bins.bin.values
-    tick_labels = [x[3:] for x in bins.chrom.values]
+    tick_labels = bins.chrom.values
 
     return ticks, tick_labels
 
