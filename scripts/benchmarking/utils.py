@@ -31,6 +31,7 @@ def load_chisel_results(path):
     chisel[["A", "B"]] = chisel["HAP_CN"].str.split(r"|", expand=True)
     chisel["total"] = chisel["A"].astype(int) + chisel["B"].astype(int)
     chisel['CELL'] = 'cell' + chisel['CELL'].astype(str)
+    chisel = chisel.sort_values(["CELL", "#CHR", "START"]) 
     return chisel
 
 
@@ -65,6 +66,8 @@ def load_hmmcopy_clones(path):
 def load_hapclone_results(path, baf=False, adj=False, baf_adj=False):
     hapclone = pd.read_csv(path, sep="\t", compression="gzip")
     hapclone["total"] = hapclone["cn_A_cell"] + hapclone["cn_B_cell"]
+    hapclone['chrom'] = [int(x[3:]) for x in hapclone.chrom.values]
+    hapclone = hapclone.sort_values(by=["cell_id", "chrom", "beg"])
     return hapclone
 
 
