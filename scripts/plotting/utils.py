@@ -72,7 +72,7 @@ def load_chisel_results(path, baf=False):
 
 def load_hmmcopy_results(path):
     hmmcopy = pd.read_csv(path)
-
+    hmmcopy = hmmcopy.sort_values(["cell_id", "chr", "start"])
     return hmmcopy
 
 def load_signals_results(path):

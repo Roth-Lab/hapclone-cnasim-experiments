@@ -43,6 +43,7 @@ def load_chisel_clones(path):
 
 def load_signals_results(path):
     signals = pd.read_csv(path, sep="\t")
+    signals = signals.sort_values(["cell_id", "chr", "start"]) 
     return signals
 
 
@@ -54,6 +55,7 @@ def load_signals_clones(path):
 
 def load_hmmcopy_results(path):
     hmmcopy = pd.read_csv(path)
+    hmmcopy = hmmcopy.sort_values(["cell_id", "chr", "start"]) 
     return hmmcopy
 
 
