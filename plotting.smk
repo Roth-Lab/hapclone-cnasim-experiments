@@ -16,18 +16,19 @@ rule plot_total:
     conda:
         "envs/benchmarking.yaml"
     input:
-        c=config.chisel_calls_file,
-        s=config.signals_output_template,
-        hm=config.hmmcopy_reads_template,
         ha=config.hapclone_default,
         p=config.cnasim_profiles,
         t=config.cnasim_tree
+    params:
+        c=config.chisel_calls_file,
+        s=config.signals_output_template,
+        hm=config.hmmcopy_reads_template,
     resources:
         mem="8G"
     output:
         config.total_plot
     shell:
-        "python scripts/plotting/total_plots.py -ha {input.ha} -p {input.p} -t {input.t} -s {input.s} -hm {input.hm} -c {input.c} -o {output}"
+        "python scripts/plotting/total_plots.py -ha {input.ha} -p {input.p} -t {input.t} -s {params.s} -hm {params.hm} -c {params.c} -o {output}"
 
 rule plot_baf:
     conda:
@@ -129,5 +130,39 @@ rule plot_results:
         "-mi {input.mi} -mio {output.mio} "
         "-b {input.b} -bo {output.bo} "
         "-w {input.w} -wo {output.wo} "
+
+rule plot_merged_results:
+    conda:
+        "envs/benchmarking.yaml"
+    input:
+        p=expand(config.ploidy_results, sim_set=config.simulation_set_ids, allow_missing=True),
+        ha=expand(config.hamming_results, sim_set=config.simulation_set_ids, allow_missing=True),
+        ma=expand(config.cluster_max_results, sim_set=config.simulation_set_ids, allow_missing=True),
+        mi=expand(config.cluster_min_results, sim_set=config.simulation_set_ids, allow_missing=True),
+        b=expand(config.cluster_between_results, sim_set=config.simulation_set_ids, allow_missing=True),
+        w=expand(config.cluster_within_results, sim_set=config.simulation_set_ids, allow_missing=True)
+    output:
+        ps=config.ploidy_scatter,
+        pe=config.ploidy_error,
+        hs=config.hamming_scatter,
+        he=config.hamming_error,
+        mas=config.max_scatter,
+        mae=config.max_error,
+        mis=config.min_scatter,
+        mie=config.min_error,
+        bs=config.between_scatter,
+        be=config.between_error,
+        ws=config.within_scatter,
+        we=config.within_error
+    resources:
+        mem="16G"
+    shell:
+        "python scripts/plotting/merged_benchmark_plot.py "
+        "-p {input.p} -ps {output.ps} -ps {output.pe} "
+        "-ha {input.ha} -hs {output.hs} -he {output.he} "
+        "-ma {input.ma} -mas {output.mas} -mae {output.mae} "
+        "-mi {input.mi} -mis {output.mis} -mie {output.mie} "
+        "-b {input.b} -bs {output.bs} -be {output.be} "
+        "-w {intput.w} -ws {output.ws} -we {output.we} "
 
 

@@ -13,35 +13,48 @@ class ConfigManager(object):
             for r in self.replicate_ids:
                 for c in self.cell_ids:
                     yield str(self.snp_counts_file).format(cell=c, sim_set=s, replicate=r)
-                    #yield str(self.hmmcopy_cnv_profile_template).format(cell=c, sim_set=s, replicate=r)
-                    #yield str(self.chisel_calls_file).format(sim_set=s, replicate=r)
-                    #yield str(self.chisel_swap_file).format(sim_set=s, replicate=r)
+                    yield str(self.hmmcopy_cnv_profile_template).format(cell=c, sim_set=s, replicate=r)
+                    yield str(self.chisel_calls_file).format(sim_set=s, replicate=r)
+                    yield str(self.chisel_swap_file).format(sim_set=s, replicate=r)
                     yield str(self.hapclone_input_file).format(sim_set=s, replicate=r)
-                    #yield str(self.signals_output_template).format(sim_set=s, replicate=r)
+                    yield str(self.signals_output_template).format(sim_set=s, replicate=r)
                     for h in self.hapclone_cli_args:
                         yield str(self.hapclone_results_file).format(hapclone_run_config=h, sim_set=s, replicate=r)
-                    #yield str(self.data_plot).format(sim_set=s, replicate=r)
-                    #yield str(self.total_plot).format(sim_set=s, replicate=r)
-                    #yield str(self.baf_plot).format(sim_set=s, replicate=r)
-                    #yield str(self.baf_mirror_plot).format(sim_set=s, replicate=r)
-                    #yield str(self.hapclone_baf_adj_plot).format(sim_set=s, replicate=r)
-                    #yield str(self.hapclone_total_adj_plot).format(sim_set=s, replicate=r)
-                    #yield str(self.phasing_plot).format(sim_set=s, replicate=r)
-                    #yield str(self.hapclone_baf_plot).format(sim_set=s, replicate=r)
-                    #yield str(self.hapclone_baf_mirror_plot).format(sim_set=s, replicate=r)
-                    #yield str(self.hapclone_total_plot).format(sim_set=s, replicate=r)
-                    #yield str(self.cluster_within_results).format(sim_set=s)
-                    #yield str(self.cluster_between_results).format(sim_set=s)
-                    #yield str(self.cluster_max_results).format(sim_set=s)
-                    #yield str(self.cluster_min_results).format(sim_set=s)
-                    #yield str(self.ploidy_results).format(sim_set=s)
-                    #yield str(self.hamming_results).format(sim_set=s)
-                    #yield str(self.ploidy_plot).format(sim_set=s)
-                    #yield str(self.hamming_plot).format(sim_set=s)
-                    #yield str(self.min_plot).format(sim_set=s)
-                    #yield str(self.max_plot).format(sim_set=s)
-                    #yield str(self.between_plot).format(sim_set=s)
-                    #yield str(self.within_plot).format(sim_set=s)
+                    yield str(self.data_plot).format(sim_set=s, replicate=r)
+                    yield str(self.total_plot).format(sim_set=s, replicate=r)
+                    yield str(self.baf_plot).format(sim_set=s, replicate=r)
+                    yield str(self.baf_mirror_plot).format(sim_set=s, replicate=r)
+                    yield str(self.hapclone_baf_adj_plot).format(sim_set=s, replicate=r)
+                    yield str(self.hapclone_total_adj_plot).format(sim_set=s, replicate=r)
+                    yield str(self.phasing_plot).format(sim_set=s, replicate=r)
+                    yield str(self.hapclone_baf_plot).format(sim_set=s, replicate=r)
+                    yield str(self.hapclone_baf_mirror_plot).format(sim_set=s, replicate=r)
+                    yield str(self.hapclone_total_plot).format(sim_set=s, replicate=r)
+                    yield str(self.cluster_within_results).format(sim_set=s)
+                    yield str(self.cluster_between_results).format(sim_set=s)
+                    yield str(self.cluster_max_results).format(sim_set=s)
+                    yield str(self.cluster_min_results).format(sim_set=s)
+                    yield str(self.ploidy_results).format(sim_set=s)
+                    yield str(self.hamming_results).format(sim_set=s)
+                    yield str(self.ploidy_plot).format(sim_set=s)
+                    yield str(self.hamming_plot).format(sim_set=s)
+                    yield str(self.min_plot).format(sim_set=s)
+                    yield str(self.max_plot).format(sim_set=s)
+                    yield str(self.between_plot).format(sim_set=s)
+                    yield str(self.within_plot).format(sim_set=s)
+        yield str(self.ploidy_scatter)
+        yield str(self.ploidy_error)
+        yield str(self.hamming_scatter)
+        yield str(self.hamming_error)
+        yield str(self.max_scatter)
+        yield str(self.max_error)
+        yield str(self.min_scatter)
+        yield str(self.min_error)
+        yield str(self.between_scatter)
+        yield str(self.between_error)
+        yield str(self.within_scatter)
+        yield str(self.within_error)
+        
 
     @property
     def out_dir(self):
@@ -454,6 +467,59 @@ class ConfigManager(object):
     @property
     def within_plot(self):
         return self.plot_dir.joinpath("results", "within.png")
+
+    @property
+    def final_plot_dir(self):
+        path = pathlib.Path(self.config["outdir"])
+        return path
+
+    @property
+    def ploidy_scatter(self):
+        return self.final_plot_dir.joinpath("ploidy_scatter.png")
+
+    @property
+    def ploidy_error(self):
+        return self.final_plot_dir.joinpath("ploidy_error.png")
+
+    @property
+    def hamming_scatter(self):
+        return self.final_plot_dir.joinpath("hamming_scatter.png")
+
+    @property
+    def hamming_error(self):
+        return self.final_plot_dir.joinpath("hamming_error.png")
+
+    @property
+    def max_scatter(self):
+        return self.final_plot_dir.joinpath("max_scatter.png")
+
+    @property
+    def max_error(self):
+        return self.final_plot_dir.joinpath("max_error.png")
+
+    @property
+    def min_scatter(self):
+        return self.final_plot_dir.joinpath("min_scatter.png")
+
+    @property
+    def min_error(self):
+        return self.final_plot_dir.joinpath("min_error.png")
+
+    @property
+    def between_scatter(self):
+        return self.final_plot_dir.joinpath("between_scatter.png")
+
+    @property
+    def between_error(self):
+        return self.final_plot_dir.joinpath("between_error.png")
+
+    @property
+    def within_scatter(self):
+        return self.final_plot_dir.joinpath("within_scatter.png")
+
+    @property
+    def within_error(self):
+        return self.final_plot_dir.joinpath("within_error.png")
     
     # Benchmarking
     @property
