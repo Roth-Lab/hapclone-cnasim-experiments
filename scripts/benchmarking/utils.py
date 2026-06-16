@@ -67,7 +67,7 @@ def load_hmmcopy_clones(path):
 
 def load_hapclone_results(path, baf=False, adj=False, baf_adj=False):
     hapclone = pd.read_csv(path, sep="\t", compression="gzip")
-    hapclone["total"] = hapclone["cn_A_cell"] + hapclone["cn_B_cell"]
+    hapclone["total"] = hapclone["cn_A_cell_adj"] + hapclone["cn_B_cell_adj"]
     hapclone['chrom'] = [int(x[3:]) for x in hapclone.chrom.values]
     hapclone = hapclone.sort_values(by=["cell_id", "chrom", "beg"])
     return hapclone
