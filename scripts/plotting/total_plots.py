@@ -23,8 +23,8 @@ def main(args):
     methods.append("cnasim")
 
     # HapClone
-    hapclone = load_hapclone_results(args.hapclone_file)
-    hapclone_profile = ordered_profiles("cell_id", "total", hapclone, leaves)
+    hapclone = load_hapclone_results(args.hapclone_file, adj=True)
+    hapclone_profile = ordered_profiles("cell_id", "cn_cell_adj", hapclone, leaves)
     profiles.append(hapclone_profile)
     methods.append("HapClone")
 

@@ -25,8 +25,8 @@ def main(args):
 
     print("Reading in results")
     # HapClone
-    hapclone = load_hapclone_results(args.hapclone_file, baf=True)
-    hapclone_profile = ordered_profiles("cell_id", "baf", hapclone, leaves)
+    hapclone = load_hapclone_results(args.hapclone_file, baf_adjusted=True)
+    hapclone_profile = ordered_profiles("cell_id", "baf_adjusted", hapclone, leaves)
     profiles.append(hapclone_profile)
     profiles_mirror.append(1 - hapclone_profile)
     methods.append("HapClone")

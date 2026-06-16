@@ -22,8 +22,8 @@ def main(args):
 
     hapclone_files = args.hapclone_file
     for file in hapclone_files:
-        hapclone = load_hapclone_results(str(file))
-        hapclone_profile = ordered_profiles("cell_id", "total", hapclone, leaves)
+        hapclone = load_hapclone_results(str(file), adj=True)
+        hapclone_profile = ordered_profiles("cell_id", "cn_cell_adj", hapclone, leaves)
         profiles.append(hapclone_profile)
         name = str(file).split("/")[-2]
         methods.append(name)
