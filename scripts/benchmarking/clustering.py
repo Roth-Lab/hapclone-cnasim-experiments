@@ -67,7 +67,7 @@ def main(args):
 
         # Signals
         if Path(signals_file).exists():
-            signals = load_signals_results(signals_file)
+            signals = load_signals_clones(signals_file)
             print(signals.head())
             signals_results = benchmark_cluster(
                 signals, distance_matrix, "clone_id", "cell_id"

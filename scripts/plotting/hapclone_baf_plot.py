@@ -23,7 +23,7 @@ def main(args):
 
     hapclone_files = args.hapclone_file
     for file in hapclone_files:
-        hapclone = load_hapclone_results(str(file), baf_adj=True)
+        hapclone = load_hapclone_results(str(file), baf_adj=True, adj=True)
         hapclone_profile = ordered_profiles("cell_id", "baf_adjusted", hapclone, leaves)
         profs.append(hapclone_profile)
         profs_mirror.append(1 - hapclone_profile)

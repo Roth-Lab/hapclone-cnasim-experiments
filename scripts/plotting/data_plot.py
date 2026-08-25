@@ -36,7 +36,7 @@ def main(args):
     hapclone["bcounts"] = hapclone_baf[:, :, :, 1].sum(axis=2).flatten()
     hapclone["total"] = hapclone["acounts"] + hapclone["bcounts"]
     hapclone["baf"] = hapclone["acounts"] / hapclone["total"]
-    hapclone['bins'] = bins*50
+    hapclone['bins'] = bins*num_cells
     hapclone[['chrom', 'beg', 'end']] = hapclone['bins'].astype('str').str.split(':', expand=True)
 
 
