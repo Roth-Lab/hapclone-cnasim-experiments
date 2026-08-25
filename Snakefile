@@ -67,6 +67,8 @@ rule simulate_snp_counts:
         r=config.read_length,
     conda:
         "envs/python.yaml"
+    resources: 
+        mem="32G"
     shell:
         "python scripts/simulate_snp_counts.py "
         "-c {wildcards.cell} "

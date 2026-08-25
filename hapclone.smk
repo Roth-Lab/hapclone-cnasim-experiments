@@ -42,7 +42,7 @@ rule hapclone_fit:
     input:
         d=config.hapclone_input_file,
     output:
-        config.hapclone_fit_file,
+        str(config.hapclone_fit_file),
     params:
         a=config.get_hapclone_cli_args,
         c=config.max_copy_state,
@@ -53,7 +53,7 @@ rule hapclone_fit:
     log:
          config.get_log_file(config.hapclone_fit_file),
     resources:
-        mem=lambda wildcards, attempt: "{}G".format(32 * attempt),
+        mem="256G", # lambda wildcards, attempt: "{}G".format(32 * attempt),
         runtime=lambda wildcards, attempt: "{}h".format(24 * attempt),
     threads: 
         config.hapclone_num_threads

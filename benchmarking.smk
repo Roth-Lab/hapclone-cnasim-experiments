@@ -9,6 +9,8 @@ rule clustering_benchmark:
         s=expand(config.signals_umap_template, replicate=config.replicate_ids, allow_missing=True),
     params:
         n=config.num_replicates
+    resources:
+        mem="32G"
     output:
         rw=config.cluster_within_results,
         ma=config.cluster_max_results,

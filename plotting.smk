@@ -18,8 +18,7 @@ rule plot_total:
     input:
         ha=config.hapclone_default,
         p=config.cnasim_profiles,
-        t=config.cnasim_tree
-    params:
+        t=config.cnasim_tree,
         c=config.chisel_calls_file,
         s=config.signals_output_template,
         hm=config.hmmcopy_reads_template,
@@ -28,7 +27,7 @@ rule plot_total:
     output:
         config.total_plot
     shell:
-        "python scripts/plotting/total_plots.py -ha {input.ha} -p {input.p} -t {input.t} -s {params.s} -hm {params.hm} -c {params.c} -o {output}"
+        "python scripts/plotting/total_plots.py -ha {input.ha} -p {input.p} -t {input.t} -s {input.s} -hm {input.hm} -c {input.c} -o {output}"
 
 rule plot_baf:
     conda:
@@ -158,11 +157,11 @@ rule plot_merged_results:
         mem="16G"
     shell:
         "python scripts/plotting/merged_benchmark_plot.py "
-        "-p {input.p} -ps {output.ps} -ps {output.pe} "
+        "-p {input.p} -ps {output.ps} -pe {output.pe} "
         "-ha {input.ha} -hs {output.hs} -he {output.he} "
         "-ma {input.ma} -mas {output.mas} -mae {output.mae} "
         "-mi {input.mi} -mis {output.mis} -mie {output.mie} "
         "-b {input.b} -bs {output.bs} -be {output.be} "
-        "-w {intput.w} -ws {output.ws} -we {output.we} "
+        "-w {input.w} -ws {output.ws} -we {output.we} "
 
 
